@@ -15,61 +15,24 @@
 不论是在项目中还是在项目所包含的框架或 bundle 中，Objective-C 中的类名必须是唯一的。例如，避免使用如 ViewController 或 TextParser 作为类名，因为这些名称有可能是包含在 App 中的一个框架名。
 
 在命名类时使用前缀命名可以保证类名唯一。你会注意到 Cocoa 及 Cocoa Touch 的类名通常都以 NS 或 UI开头。像这样两个字符组成前缀的命名方式在 Apple 中专门为框架类而保留。随着你学习更多关于 Cocoa 及 Cocoa Touch 的知识，你会遇到一些其他的特定框架的前缀，如下表所示。
-<table>
-<tr>
-<td>Prefix
-</td>
-<td>Framework
-</td>
-</tr>
-<tr>
-<td>NS
-</td>
-<td>Foundation (OS X and iOS) and Application Kit (OS X)
-</td>
-</tr>
-<tr>
-<td>UI
-</td>
-<td>UIKit (iOS)
-</td>
-</tr>
-<tr>
-<td>AB
-</td>
-<td>Address Book
-</td>
-</tr>
-<tr>
-<td>CA
-</td>
-<td>Core Animation
-</td>
-</tr>
-<tr>
-<td>CI
-</td>
-<td>Core Image
-</td>
-</tr>
-</table>
+
+| Prefix       | Framework   |
+| ------------- |:-------------:| -----:|
+| NS      | Foundation (OS X and iOS) and Application Kit (OS X)  |
+| UI      | UIKit (iOS)  |
+| AB      | Address Book  |
+| CA      | Core Animation  |
+| CI      | Core Image  |
 
 而你所创建的类的命名必须使用三个字符组成的前缀，可以是你的公司名和 App 名的结合，也可以是你的 App 中的某个组成部分。例如，如果你的公司叫做 Whispering Oak，你正在开发的一个游戏叫做 Zebra Surprise，那么你可以使用 WZS 或 WOZ 作为类名的前缀。
 
 此外，你应该尽可能使用名词来命名你的类名，这样可以明确地显示这个类所代表的含义。例如下表中来自 Cocoa 及 Cocoa Touch中的例子。
-<table>
-<tr>
-<td>NSWindow
-</td>
-<td>CAAnimation
-</td>
-</td>
-<td>NSWindowController
-</td>
-<td>NSManagedObjectContext
-</td>
-</tr>
-</table>
+
+
+| NSWindow       | CAAnimation   | NSWindowController | NSManagedObjectContext |
+||
+||
+
 如果你需要使用多个单词来命名你的类，那么每个单词的首字母必须是大写。
 
 ###类中的方法名应具描述性且唯一
@@ -78,30 +41,16 @@
 
 方法名不需要包含前缀，且应当以小写字母开头，而对于多单词组成的名称，后续单词的首字母应该大写。下表为 NSString 类中的方法的命名。
 
-<table>
-<tr>
-<td>length
-</td>
-<td>characterAtIndex:
-</td>
-</td>
-<td>lengthOfBytesUsingEncoding:
-</td>
-</tr>
-</table>
+| length      | characterAtIndex: | lengthOfBytesUsingEncoding: |
+| ------------- |:-------------:| -----:|
+||
 
 如果一个方法中带有多个参数，那么方法名中必须提示每一个参数：
 
-<table>
-<tr>
-<td>substringFromIndex:
-</td>
-<td>writeToURL:atomically:encoding:error:
-</td>
-<td>enumerateSubstringsInRange:options:usingBlock:
-</td>
-</tr>
-</table>
+| substringFromIndex:      | writeToURL:atomically:encoding:error: | enumerateSubstringsInRange:options:usingBlock: |
+| ------------- |:-------------:| -----:|
+|  |
+
 
 方法名的第一部分提示方法的主要作用或提示方法调用后的结果。例如，如果一个方法在调用后返回一个值，那么第一个单词应当表明该返回值的类型，如上文表格中的方法名 length，character...，substring...等等；如果你还需要在方法名中提示一些关于这个返回值的信息，那么应当使用多个单词来命名方法，如 NSString 类中的 mutableCopy 方法，capitalizedString 方法和 lastPathComponent 方法；如果一个方法用于执行某个操作，如写磁盘或列举目录，那么方法名的第一个单词必须提示这个操作，如 write... 方法或 enumerate... 方法。
 
@@ -109,25 +58,11 @@
 
 使用一个能够清楚表明方法的作用但又简洁明了的方法名非常重要，这不代表你需要取一个冗长的方法名，而同时方法名过于简洁明了也无法很好地表明一个方法的含义，因此最佳的方法是在这二者中找寻平衡点，如：
 
-<table>
-<tr>
-<td>stringAfterFindingAndReplacingAllOccurrencesOfThisString:withThisString:
-</td>
-<td>Too verbose
-</td>
-</tr><tr>
-<td>strReplacingStr:str:
-</td>
-<td>Too concise
-</td>
-</tr>
-<tr>
-<td>stringByReplacingOccurrencesOfString:withString:
-</td>
-<td>Just right
-</td>
-</tr>
-</table>
+| | |
+| ---:|---:|
+|stringAfterFindingAndReplacingAllOccurrencesOfThisString:withThisString|Too verbose|
+|strReplacingStr:str:|Too concise|
+|stringByReplacingOccurrencesOfString:withString:|Just right|
 
 除非在不同语言和文化中某个单词的缩写是众所周知的，否则你应当避免在方法名中使用缩写。这里提供了一个常见缩写的列表：[Acceptable Abbreviations and Acronyms](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/APIAbbreviations.html#//apple_ref/doc/uid/20001285)。
 
@@ -195,4 +130,3 @@ NSMutableArray *array = [NSMutableArray array];
 创建 class facotry 方法应以其所创建的类的名称开头（不使用前缀），以 NSArray 类为例，它的 factory 方法以 array 开头。而 NSMutableArray 类不定义任何它的类依赖 factory 方法，因此它创建一个可变 array 的 factory 方法仍然以 array 开头。
 
 Objective-C 有许多不同的内存管理规则，这些规则让编译器能够保证对象有足够的的内存空间。编译器会根据创建方法的名称来判断遵循哪一条规则。因为 autorelease pool blocks 不同，由 factory 方法创建的对象与由传统的分配空间、初始化或 new 方法得来的对象在管理上会有细微的区别。学习更多有关 autorelease pool blocks 和一般的内存管理知识，查阅 [Advanced Memory Management Programming Guide](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/MemoryMgmt.html#//apple_ref/doc/uid/10000011i) 。
-
