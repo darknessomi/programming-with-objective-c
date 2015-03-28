@@ -1,6 +1,6 @@
 - [Introduction](introduction.md) ([icodeu](https://github.com/icodeu) done)
 - [待添加标题翻译 - Defining Classes](defining-classes.md) ([andguoan](https://github.com/andguoan) 已认领)
-- [待添加标题翻译 - Working with Objects](working-with-objects.md) ([bjtuweb-12283007] (https://github.com/bjtuweb-12283007) 已认领)
+- [Working with Objects](working-with-objects.md) ([bjtuweb-12283007] (https://github.com/bjtuweb-12283007) done)
 - [待添加标题翻译 - Encapsulating Data](encapsulating-data.md) ([Lilyzhang1003] (https://github.com/Lilyzhang1003) 已认领)
 - [待添加标题翻译 - Customizing Existing Classes](customizing-existing-classes.md) ([katzhb] (https://github.com/katzhb) 已认领)
 - [Working with Protocols](working-with-protocols.md) ([ritaaaaa] (https://github.com/ritaaaaa) done)
