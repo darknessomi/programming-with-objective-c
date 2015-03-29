@@ -3,12 +3,13 @@
   除了前面一章提到的消息行为（ messaging behavior ）外，对象还可以通过属性封装数据。
   这一章节描述了 ObjC 中用于声明对象属性的语法，阐明了属性如何通过默认的访问方法和实例变量的生成实现。如果实例变量支持该属性，那么该变量必须在所有初始化方法中正确的设定。
   如果一个对象需要通过权限包含一个连向其他对象的链接，那么考虑这两个对象之间的关系性质将会变得很重要。尽管ObjC的内存管理将会通过自动引用计数（ Automatic Reference Counting (ARC)）为你处理大部分类似情况，但你仍需要了解这些，以避免类似强引用环（ strong reference cycle ）导致内存溢出等问题的出现。这一章还介绍了对象的生命周期，以及如何从利用关系来管理对象图的角度思考。
+  
 ##用属性封装对象的值
  大部分对象都会通过跟踪信息来执行任务。一些对象被设计为一个以上具体值的模型，如Cocoa 中的用来保存数值的NSNumber类 或用来代表一个有姓、名的人的自定义类 XYZperson 。还有些对象作用域更为广泛，甚至可能用来处理用户界面和其显示信息之间的交互，但即使这样的对象，仍需要跟踪用户界面元素或相关模式对象的信息。
  
 ###为外部数据声明公共属性
-
-  ObjC的属性提供了一种定义信息的方式，而这些信息正是类中将要封装的。正如你在[ Properties Control Access to an Object’s Values](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/DefiningClasses/DefiningClasses.html#//apple_ref/doc/uid/TP40011210-CH3-SW7)一节中看到的，类的接口（ interface ）包含了属性声明，例如：
+ 
+   ObjC的属性提供了一种定义信息的方式，而这些信息正是类中将要封装的。正如你在[ Properties Control Access to an Object’s Values](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/DefiningClasses/DefiningClasses.html#//apple_ref/doc/uid/TP40011210-CH3-SW7)一节中看到的，类的接口（ interface ）包含了属性声明，例如：
   
     @interface XYZPerson : NSObject
     @property NSString *firstName;
@@ -17,7 +18,7 @@
 在这个例子中XYZPerson类声明了string 属性来保存一个人的名和姓。
 这是面向对象编程中一个非常基本的原则——将对象的内部运作隐藏在它的公共接口之后，所以我们总是使用一个对象的外部特性来访问它的属性，而不是直接尝试去访问它内部的值。
 
- ###通过访问器（ accessor ） 方法来获得或设置属性的值
+###通过访问器（ accessor ） 方法来获得或设置属性的值
 
 你通过访问器（ accessor ）方法来访问或设定对象的属性：
 
@@ -61,6 +62,7 @@
 *  通过somePerson.firstName  获得一个值与使用 [somePerson firstName]是相同的
 *  通过 somePerson.firstName = @"Johnny" 赋值与使用 [somePerson setFirstName:@"Johnny"] 是相同的
 这意味着通过点语法访问属性也是由属性特征控制的。比如一个属性标记为readonly ，那么当你试图通过点语法对该属性进行设置时，将会出现编译错误。
+
 ###实例变量支持大多数的属性
 
 默认情况下，一个可读写属性会获得实例变量的支持，这些会由编译器自动生成。
@@ -138,9 +140,10 @@ Setter 方法可能会产生额外的副作用，它可能会触发 KVC 通知�
     return self;
     }
 一个 init 方法应该在开始它自己的初始化之前，首先用 self 响应父类的初始化方法请求 。一个父类在初始化对象失败之后会返回一个 nil ，所以应当总是在执行你自己类的初始化之前，检查 self 的返回值。
+
 图3-1 初始化过程
 
-![initflow.png](../images/initflow.png)
+![initflow.png](/images/initflow.png)
 
 正如你在前面的章节所看到的，对象的初始化有两种方式，通过调用 init ,或调用为对象初始化具体值的方法。
 在 XYNPerson例子中，提供一个可以设置初始名和姓的初始化方法是行的通的。
@@ -246,32 +249,32 @@ Setter 方法可能会产生额外的副作用，它可能会触发 KVC 通知�
 
 图3-2 强参考
 
-![strongpersonproperties](../images/strongpersonproperties.png)
+![strongpersonproperties](/images/strongpersonproperties.png)
 
 当一个 XYZPerson 对象从内存中被释放时，假设这时不再有其他任何对象强引用他们，那么这两个字符串对象也会同样被释放。再为这个例子增加一点复杂性，考虑一下下面展示的这个应用的对象图：
 
 图3-3  姓名标志制作 应用
 
-![namebadgemaker](../images/namebadgemaker.png)
+![namebadgemaker](/images/namebadgemaker.png)
 
 当用户点击了更新按钮时，这个标志的预览图就会根据相应的姓名信息更新。当一个 person 对象的信息第一次输入并点击更新按钮时，简化的的对象图可能会是图3-4中的样子，
 
 图3-4 初始 XYZPerson 创建时的关系图
 
-![simplifiedobjectgraph1](../images/simplifiedobjectgraph1.png)
+![simplifiedobjectgraph1](/images/simplifiedobjectgraph1.png)
 
 当用户调整了输入的名时，关系图会变成图3-5 中的样子
 
 图3-5 当名改变时的简化关系图
 
-![simplifiedobjectgraph2](../images/simplifiedobjectgraph2.png)
+![simplifiedobjectgraph2](/images/simplifiedobjectgraph2.png)
 
 尽管此时 XYZPerson 对象已经有了一个不同的 firstName ，标志视图仍然还包含着一个跟最开始的 @”John” 字符对象的强引用。这意味着 @”John” 对象仍在内存中，并且还被标志视图用来输出名字。
 一旦用户第二次点击了更新按钮，标志视图界面将会被告知更新它的内部属性以达到与 person 对象匹配。这时关系图会是图3-6中的样子：
 
 图3-6 更新了标志视图后的简化对象图
 
-![simplifiedobjectgraph3](../images/simplifiedobjectgraph3.png)
+![simplifiedobjectgraph3](/images/simplifiedobjectgraph3.png)
 
 这时不再会有任何强引用与最开始的 @”John” 对象关联，它将会从内存中移出。
 
@@ -283,27 +286,29 @@ Setter 方法可能会产生额外的副作用，它可能会触发 KVC 通知�
 
 图3-7 视图表与授权对象之间的强引用
 
-![strongreferencecycle1](../images/strongreferencecycle1.png)
+![strongreferencecycle1](/images/strongreferencecycle1.png)
 
 但是当其他对象撤销了他们与视图表与其授权对象之间的强引用时，问题就出现了
 
 图3-8 一个强引用环
 
-![strongreferencecycle2](../images/strongreferencecycle2.png)
+![strongreferencecycle2](/images/strongreferencecycle2.png)
 
 即使现在这两个对象已经没有任何在内存中存在的必要了——除了他俩之间还存在关联之外，已经没有任何对象与他们有强引用了，但他们却因为彼此之间存在的强引用而一直保持活跃。
 当视图表将它与它授权对象之间的关联修改为弱关联（ weak relationship ）的时候（这也是 UITableView  和  NSTableView  如何解决这个问题的），最初的关系图将会变成图3-9。
 
 图3-9 视图表与其授权对象之间的正确关系
 
-![strongreferencecycle3](../images/strongreferencecycle3.png)
+![strongreferencecycle3](/images/strongreferencecycle3.png)
 
 如果此时其他对象再撤销他们与视图表和其授权之间的强引用，视图表就不会再与它的授权有强引用了。如图3-10
+
 图3-10 规避了强引用的环
 
-![strongreferencecycle4](../images/strongreferencecycle4.png)
+![strongreferencecycle4](/images/strongreferencecycle4.png)
 
 这意味着授权对象会被释放，因此它对视图表的强引用也会解除，如图3-11
+
 图3-11 释放授权对象
 
 ![strongreferencecycle5](/images/strongreferencecycle5.png)
@@ -355,6 +360,7 @@ originalDate 变量存在被设置成 nil 的可能性。当  self.lastModifica
     [self.weakProperty doSomethingElse];
     }
 在这种情况下，你可能需要将弱属性存放在一个强变量中，从而确保它在你需要使用的过程中一直保存在内存中。
+
     - (void)someMethod {
     NSObject *cachedObject = self.weakProperty;
     [cachedObject doSomething];
