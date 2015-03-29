@@ -18,6 +18,7 @@
 这是面向对象编程中一个非常基本的原则——将对象的内部运作隐藏在它的公共接口之后，所以我们总是使用一个对象的外部特性来访问它的属性，而不是直接尝试去访问它内部的值。
 
  ###通过访问器（ accessor ） 方法来获得或设置属性的值
+
 你通过访问器（ accessor ）方法来访问或设定对象的属性：
 
     NSString *firstName = [somePerson firstName];
@@ -47,6 +48,7 @@
 在这种情况下，编译器仅会合成一个 isFinished 方法，而不是 setFinished 方法。
 
 **注：**一般来说属性访问方法遵循键/值编码，也就是说它的命名是遵循一定的命名惯例的。参看[Key-Value Coding Programming Guide](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/KeyValueCoding/Articles/KeyValueCoding.html#//apple_ref/doc/uid/10000107i) 获得更多信息
+
 ###点语法对于访问器方法调用是简洁的选择
 
 除了明确的访问器（accessor）方法调用，ObjC 还提供了另外一种选择来访问对象属性——点语法
@@ -156,6 +158,7 @@ Setter 方法可能会产生额外的副作用，它可能会触发 KVC 通知�
  
     return self;
     }
+
 ####指定初始器是最主要的初始化方法
 
 如果一个对象声明了一个以上的初始化方法，你应该确定一个方法作为指定初始器方法，它通常是为初始化提供最多选择的方法（像是拥有最多参数的方法），并会被其他的便利方法调用。你通常还需要覆写 init 方法来通过合适的默认值调用指定初始器。
@@ -174,7 +177,9 @@ Setter 方法可能会产生额外的副作用，它可能会触发 KVC 通知�
     return [self initWithFirstName:@"John" lastName:@"Doe" dateOfBirth:nil];
     }
 如果你需要在一个使用多个 init 方法的子类创建时，编写初始化方法，那么，你可以覆写父类的指定初始器来实现你自己的初始化，或者选择再另外添加一个你自己的初始器。无论哪种方法，你都需要在开始你自己的初始化之前，调用父类的指定初始器（在此处 [ super init ] 调用）。
+
 ###你可以实现你自定义的访问器方法
+
 属性也不总是被他们自己的实例变量支持的。举一个例子，XYZPerson 类可以为一个人的全名定义一个只读属性：
  
     @property (readonly) NSString *fullName;
@@ -238,31 +243,38 @@ Setter 方法可能会产生额外的副作用，它可能会触发 KVC 通知�
 就拿 XYZPerson 的例子来说， firstName  和 lastName 这两个字符串属性可以说是有效的被 XYZPerson 实例所“拥有”，这意味着只要 XYZPerson 对象存在在内存中， 这两个属性就同样存在。
 当一个对象，通过有效地掌握其他对象的所有权的方式，依赖于其他对象时，这个对象就被称为强引用（ strong reference ）其他对象。
 在 ObjC 中，只要有至少一个对象强引用了另一个对象，那么后面这个对象都会一直保持活跃。 XYZPerson 实例与两个 NSString 对象的关系图见图3-2：
+
 图3-2 强参考
+
 ![strongpersonproperties](../images/strongpersonproperties.png)
 
 当一个 XYZPerson 对象从内存中被释放时，假设这时不再有其他任何对象强引用他们，那么这两个字符串对象也会同样被释放。再为这个例子增加一点复杂性，考虑一下下面展示的这个应用的对象图：
+
 图3-3  姓名标志制作 应用
+
 ![namebadgemaker](../images/namebadgemaker.png)
 
 当用户点击了更新按钮时，这个标志的预览图就会根据相应的姓名信息更新。当一个 person 对象的信息第一次输入并点击更新按钮时，简化的的对象图可能会是图3-4中的样子，
+
 图3-4 初始 XYZPerson 创建时的关系图
 
-![simplifiedobjectgraph1](/images/simplifiedobjectgraph1.png)
+![simplifiedobjectgraph1](../images/simplifiedobjectgraph1.png)
 
 当用户调整了输入的名时，关系图会变成图3-5 中的样子
+
 图3-5 当名改变时的简化关系图
 
-![simplifiedobjectgraph2](/images/simplifiedobjectgraph2.png)
+![simplifiedobjectgraph2](../images/simplifiedobjectgraph2.png)
 
 尽管此时 XYZPerson 对象已经有了一个不同的 firstName ，标志视图仍然还包含着一个跟最开始的 @”John” 字符对象的强引用。这意味着 @”John” 对象仍在内存中，并且还被标志视图用来输出名字。
 一旦用户第二次点击了更新按钮，标志视图界面将会被告知更新它的内部属性以达到与 person 对象匹配。这时关系图会是图3-6中的样子：
 
 图3-6 更新了标志视图后的简化对象图
 
-![simplifiedobjectgraph3](/images/simplifiedobjectgraph3.png)
+![simplifiedobjectgraph3](../images/simplifiedobjectgraph3.png)
 
 这时不再会有任何强引用与最开始的 @”John” 对象关联，它将会从内存中移出。
+
 ###避免强引用环( strong reference cycles )
 
 尽管对于对象之间的单向关系，强引用表现的很好，但当你在处理一组互相联系的对象时你就需要小心了。当一组对象是通过强引用环联系时，那么即使外接已经不存在任何跟他们的强引用，他们还是因为对彼此的强引用而保持活跃。
@@ -271,23 +283,25 @@ Setter 方法可能会产生额外的副作用，它可能会触发 KVC 通知�
 
 图3-7 视图表与授权对象之间的强引用
 
-![strongreferencecycle1](//images/strongreferencecycle1.png)
+![strongreferencecycle1](../images/strongreferencecycle1.png)
 
 但是当其他对象撤销了他们与视图表与其授权对象之间的强引用时，问题就出现了
+
 图3-8 一个强引用环
 
-![strongreferencecycle2](/images/strongreferencecycle2.png)
+![strongreferencecycle2](../images/strongreferencecycle2.png)
 
 即使现在这两个对象已经没有任何在内存中存在的必要了——除了他俩之间还存在关联之外，已经没有任何对象与他们有强引用了，但他们却因为彼此之间存在的强引用而一直保持活跃。
 当视图表将它与它授权对象之间的关联修改为弱关联（ weak relationship ）的时候（这也是 UITableView  和  NSTableView  如何解决这个问题的），最初的关系图将会变成图3-9。
+
 图3-9 视图表与其授权对象之间的正确关系
 
-![strongreferencecycle3](/images/strongreferencecycle3.png)
+![strongreferencecycle3](../images/strongreferencecycle3.png)
 
 如果此时其他对象再撤销他们与视图表和其授权之间的强引用，视图表就不会再与它的授权有强引用了。如图3-10
 图3-10 规避了强引用的环
 
-![strongreferencecycle4](/images/strongreferencecycle4.png)
+![strongreferencecycle4](../images/strongreferencecycle4.png)
 
 这意味着授权对象会被释放，因此它对视图表的强引用也会解除，如图3-11
 图3-11 释放授权对象
@@ -295,6 +309,7 @@ Setter 方法可能会产生额外的副作用，它可能会触发 KVC 通知�
 ![strongreferencecycle5](/images/strongreferencecycle5.png)
 
 一旦授权对象被释放，也就不再有关联于视图表的强引用了，因此它也会被释放。
+
 ###通过强、弱声明（Strong and Weak Declaration）来管理所有权
 
 对象属性的默认声明一般是下面这样：
@@ -373,6 +388,7 @@ originalDate 变量存在被设置成 nil 的可能性。当  self.lastModifica
     NSObject * __unsafe_unretained unsafeReference;
 
 一个不安全引用与弱关联之间的相同点在于，它们都不会保证相应对象的活动。但当目标对象被释放时，不安全引用不会被设置成 nil 。这意味着将会留下一个悬空指针，指向内存中一块开始存有对象之后被释放的区域，这就是所谓的“不安全”。对一个悬空指针发送消息将会引起崩溃。
+
 ###备份属性(Copy Properties )保有他们自己的备份
 
 在一些情况下，一个对象可能会希望保存一份，为它的属性设置的其他所有对象的备份。
