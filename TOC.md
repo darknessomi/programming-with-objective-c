@@ -1,13 +1,13 @@
-- [Introduction](introduction.md) ([icodeu](https://github.com/icodeu) done)
-- [Defining Classes](defining-classes.md) ([andguoan](https://github.com/andguoan) 已认领)
-- [Working with Objects](working-with-objects.md) ([bjtuweb-12283007] (https://github.com/bjtuweb-12283007) done)
-- [Encapsulating Data](encapsulating-data.md) ([Lilyzhang1003] (https://github.com/Lilyzhang1003) done)
-- [Customizing Existing Classes](customizing-existing-classes.md) ([katzhb] (https://github.com/katzhb) 已认领)
-- [Working with Protocols](working-with-protocols.md) ([ritaaaaa] (https://github.com/ritaaaaa) done)
-- [Values and Collections](values-and-collections.md) ([zhenglu951107950] (https://github.com/zhenglu951107950) done)
-- [Working with Blocks](working-with-blocks.md) ([bjtuweb-12283012] (https://github.com/bjtuweb-12283012) done)
-- [Dealing with Errors](dealing-with-errors.md) ([Lilyzhang1003] (https://github.com/Lilyzhang1003) done)
-- [Conventions](conventions.md) ([zqvan] (https://github.com/zqvan) done)
+- [简介 - Introduction](introduction.md) 
+- [定义类 - Defining Classes](defining-classes.md)
+- [使用对象 - Working with Objects](working-with-objects.md) 
+- [数据封装 - Encapsulating Data](encapsulating-data.md) 
+- [自定义现有的类 - Customizing Existing Classes](customizing-existing-classes.md)
+- [使用协议 - Working with Protocols](working-with-protocols.md) 
+- [赋值与集合 - Values and Collections](values-and-collections.md) 
+- [使用块 - Working with Blocks](working-with-blocks.md) 
+- [错误处理 - Dealing with Errors](dealing-with-errors.md)
+- [命名规则 - Conventions](conventions.md)
  
 
 

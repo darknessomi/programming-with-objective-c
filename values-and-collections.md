@@ -1,4 +1,4 @@
-# 赋值与集合
+# 赋值与集合 - Values and Collections
 
 尽管 Objective-C 是一种面向对象的编程语言，它也是C语言的加强版，这意味着你可以在 Objective-C 中使用标准 C 中任意的纯量类型（非对象的），例如 int，float，char。在 Cocoa 和 Cocoa Touch 应用中，你还可以使用一些额外的类型，例如 NSInteger，NSUInteger 和 CGFloat，在不同的系统结构中，他们的定义方式也不同。
 
