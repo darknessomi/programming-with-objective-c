@@ -6,11 +6,11 @@
 
 本章介绍了一些广泛运用于 Cocoa 及 Cocoa Touch 编码中的命名规则，也列举了需要在整个应用程序项目（包括使用到的框架类）中唯一命名的情况。
 
-##一些名称必须在程序中唯一
+## 一些名称必须在程序中唯一
 
 创建一个新的类别、符号或是标识符时，你必须先考虑它的名称在所属区域中是否唯一。这个区域可能是整个应用程序（包括所涉及到的框架类）；也有可能仅仅是一个封装的类或是一个代码块。
 
-###类名应在程序中唯一
+### 类名应在程序中唯一
 
 不论是在项目中还是在项目所包含的框架或 bundle 中，Objective-C 中的类名必须是唯一的。例如，避免使用如 ViewController 或 TextParser 作为类名，因为这些名称有可能是包含在 App 中的一个框架名。
 
@@ -35,7 +35,7 @@
 
 如果你需要使用多个单词来命名你的类，那么每个单词的首字母必须是大写。
 
-###类中的方法名应具描述性且唯一
+### 类中的方法名应具描述性且唯一
 
 在保证了类名唯一后，同时这个类中所定义的方法名也必须是唯一的，但它可以与其他类中的某一个方法名相同。例如复写一个父类方法或是使用多态方法的情况。在不同类中具有相同功能的方法应当有相同的方法名、返回类型和参数类型。
 
@@ -66,10 +66,10 @@
 
 除非在不同语言和文化中某个单词的缩写是众所周知的，否则你应当避免在方法名中使用缩写。这里提供了一个常见缩写的列表：[Acceptable Abbreviations and Acronyms](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/APIAbbreviations.html#//apple_ref/doc/uid/20001285)。
 
-###在框架类的 Categories 中使用前缀命名方法
+### 在框架类的 Categories 中使用前缀命名方法
 当使用 Category 来创建方法到一个已经存在的框架类时，你需要在方法名中使用前缀来避免冲突。具体可参考：[Avoid Category Method Name](Clashes。https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html#//apple_ref/doc/uid/TP40011210-CH6-SW4)。
 
-##同一区域内局部变量名必须唯一
+## 同一区域内局部变量名必须唯一
 
 由于 Objective-C 是 C 语言扩展而来，因此 Objective-C 同样要遵守 C 语言中的变量命名规则。一个局部变量的变量名不允许与在相同范围内声明的其他变量名冲突。
 
@@ -95,11 +95,11 @@
 ```
 
 但这样会使得代码段变得混乱，不易于阅读，所以在编码中请尽量避免这种情况。
-##方法名
+## 方法名
 
 与类的命名相同，除了考虑唯一性之外，方法的命名还应该遵循严格的命名规则。除了 Cocoa 和 Cocoa Touch 的要求外，这些规则是为了满足一些 Objective-C 的基础机制，如编译和运行。
 
-###访问方法的名称
+### 访问方法的名称
 使用 @property 语法来声明对象的属性时（如 [Encapsulating Data](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/EncapsulatingData/EncapsulatingData.html#//apple_ref/doc/uid/TP40011210-CH5-SW1)），编译器会自动合成 getter 和 setter 方法。如果你需要使用自己提供的访问方法，那么你需要保证一个每一个属性都使用了正确的方法名，这样方法才可以被语法点调用。
 
 除个别特殊情况之外，一个 getter 方法必须使用与属性相同的名称。例如，一个属性名为 firstname，那么它的访问方法名称也应为 firstname。但 Boolean 属性是一个特例，因为 Boolean 属性的 getter 方法名以 is 开头。例如，一个属性名为 paused，那么它的 getter 方法名为 isPaused。
@@ -108,7 +108,7 @@
 
 尽管使用 @property 语法能够方便地设定不同的访问方法名称（你只需要特殊考虑 Boolean 型的情况），但你还是需要注意下述的一些规则，以免如 Key Value Coding（getter 名为 valueForKey:，setter名为 setValue:forKey:） 这样的机制无法正常工作。了解更多有关 KVC 的信息，查阅 [Key-Value Coding Programming Guide](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/KeyValueCoding/Articles/KeyValueCoding.html#//apple_ref/doc/uid/10000107i) 。
 
-###创建对象的方法名
+### 创建对象的方法名
 
 在之前的一些章节中介绍了许多不同创建一个类的实例的方法，你可以同时分配空间和初始化，例如：
 
@@ -130,3 +130,4 @@ NSMutableArray *array = [NSMutableArray array];
 创建 class facotry 方法应以其所创建的类的名称开头（不使用前缀），以 NSArray 类为例，它的 factory 方法以 array 开头。而 NSMutableArray 类不定义任何它的类依赖 factory 方法，因此它创建一个可变 array 的 factory 方法仍然以 array 开头。
 
 Objective-C 有许多不同的内存管理规则，这些规则让编译器能够保证对象有足够的的内存空间。编译器会根据创建方法的名称来判断遵循哪一条规则。因为 autorelease pool blocks 不同，由 factory 方法创建的对象与由传统的分配空间、初始化或 new 方法得来的对象在管理上会有细微的区别。学习更多有关 autorelease pool blocks 和一般的内存管理知识，查阅 [Advanced Memory Management Programming Guide](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/MemoryMgmt.html#//apple_ref/doc/uid/10000011i) 。
+
