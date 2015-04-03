@@ -101,8 +101,7 @@ Categories 可用于声明类方法或成员方法，但并非通常适合声明
 这意味着，编译器不会为该属性合成任何成员变量，也不合成任何属性访问方法。
 在类的实现过程中，你可以编写你自己的访问方法，但是你不能来跟踪该属性的值，除非原始类中已有了该成员变量。
 
-添加一个传统属性的唯一方式——也就是从现有类支持一个新的成员变量——是使用类扩展，如 [Class Extensions Extend the Internal Implementation]
-(https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html#//apple_ref/doc/uid/TP40011210-CH6-SW3)。
+添加一个传统属性的唯一方式——也就是从现有类支持一个新的成员变量——是使用类扩展，如 [Class Extensions Extend the Internal Implementation](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html#//apple_ref/doc/uid/TP40011210-CH6-SW3)。
 
 
 > **注：** Cocoa 和 Cocoa Touch 包括了大量的主要框架类的 categories。
@@ -257,7 +256,7 @@ Categories 和类扩展使得直接添加方法到一个现有的类变得很容
 任何可能会限制可重用性的部分都可授权给另一个对象，也就是说可以在运行时编译这些部分。
 一个常见的例子是标准表视图类 ( OS X 的 NSTableView 和 iOS 的 UITableView )。
 为了使一般表格视图 （使用一个或多个列和行显示信息的对象）可用，它将内容部分留给另一个对象在运行时决定。
-在下一章 [Working with Protocols] (https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithProtocols/WorkingwithProtocols.html#//apple_ref/doc/uid/TP40011210-CH11-SW1) 中会详细的介绍如何使用授权 。
+在下一章 [Working with Protocols](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithProtocols/WorkingwithProtocols.html#//apple_ref/doc/uid/TP40011210-CH11-SW1) 中会详细的介绍如何使用授权 。
 
 ## 直接与 Objective-C 运行库进行交互
 
