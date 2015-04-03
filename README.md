@@ -1,20 +1,9 @@
 # Programming with Objective-C 中文版
 
-官方英文原版：   
-<https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC>
+Objective-C 是你在为 OS X 和 IOS 系统编写应用程序时使用的主要编程语言。它是C语言的超集并具备面对对象的能力和动态运行的特性。 Objective-C 继承了 C 语言的语法，基本类型和控制流语句并且添加了定义类和方法的语法。并且 Objective-C 语言在提供了动态类型和延迟到运行时的绑定的同时，为对象图形管理和对象字面提供了语言层面上的支持。
 
-## 目的
+本教程翻译自 Apple 官方发行的 [Programming with Objective-C](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC)，为 iOS 开发者提供权威的编程指导。
 
-翻译 Programming with Objective-C 官方文档，目录见文件 [TOC.md](TOC.md)
-
-## 操作示例
-
-https://github.com/jikexueyuanwiki/guide
-
-## 如何添加图片
-
-前提：官网上的所有图片都已经下载下来放入「images」文件夹，图片的文件名没做任何修改。
-
-1、请引用「images」文件夹中的图片，不要直接引用官方上的图片链接；    
-2、引用「images」文件夹时，请使用相对文件路径。
-
+|更新日期  |更新内容
+-----------|-------
+|2014-04-03|第一版发布
