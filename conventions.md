@@ -28,10 +28,9 @@
 
 此外，你应该尽可能使用名词来命名你的类名，这样可以明确地显示这个类所代表的含义。例如下表中来自 Cocoa 及 Cocoa Touch中的例子。
 
-
-| NSWindow       | CAAnimation   | NSWindowController | NSManagedObjectContext |
-||
-||
+| NSWindow      | CAAnimation: | NSWindowController|NSManagedObjectContext
+| ------------- |:-------------:| -----:|-----------:|
+|
 
 如果你需要使用多个单词来命名你的类，那么每个单词的首字母必须是大写。
 
@@ -67,6 +66,7 @@
 除非在不同语言和文化中某个单词的缩写是众所周知的，否则你应当避免在方法名中使用缩写。这里提供了一个常见缩写的列表：[Acceptable Abbreviations and Acronyms](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/APIAbbreviations.html#//apple_ref/doc/uid/20001285)。
 
 ### 在框架类的 Categories 中使用前缀命名方法
+
 当使用 Category 来创建方法到一个已经存在的框架类时，你需要在方法名中使用前缀来避免冲突。具体可参考：[Avoid Category Method Name](Clashes。https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html#//apple_ref/doc/uid/TP40011210-CH6-SW4)。
 
 ## 同一区域内局部变量名必须唯一
@@ -95,11 +95,13 @@
 ```
 
 但这样会使得代码段变得混乱，不易于阅读，所以在编码中请尽量避免这种情况。
+
 ## 方法名
 
 与类的命名相同，除了考虑唯一性之外，方法的命名还应该遵循严格的命名规则。除了 Cocoa 和 Cocoa Touch 的要求外，这些规则是为了满足一些 Objective-C 的基础机制，如编译和运行。
 
 ### 访问方法的名称
+
 使用 @property 语法来声明对象的属性时（如 [Encapsulating Data](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/EncapsulatingData/EncapsulatingData.html#//apple_ref/doc/uid/TP40011210-CH5-SW1)），编译器会自动合成 getter 和 setter 方法。如果你需要使用自己提供的访问方法，那么你需要保证一个每一个属性都使用了正确的方法名，这样方法才可以被语法点调用。
 
 除个别特殊情况之外，一个 getter 方法必须使用与属性相同的名称。例如，一个属性名为 firstname，那么它的访问方法名称也应为 firstname。但 Boolean 属性是一个特例，因为 Boolean 属性的 getter 方法名以 is 开头。例如，一个属性名为 paused，那么它的 getter 方法名为 isPaused。
@@ -115,6 +117,7 @@
 ```
 NSMutableArray *array = [[NSMutableArray alloc] init];
 ```
+
 或者你可以使用 new 方法来分配空间和初始化：
 
 ```
