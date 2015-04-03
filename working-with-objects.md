@@ -1,4 +1,5 @@
-# 使用对象
+# 使用对象 - Working with Objects
+
 在一个 Objective-C 应用中大部分的工作是由于消息跨越对象的生态系统被送回和送达而产生的。这些对象中的一部分是由 Cocoa 或者 Cocoa Touch 所提供的类的实例，一部分是你自己的类的实例。
 
 前一章描述了来为一个类定义接口和实现的语法，其中也包括了实现包含为响应消息而需要被执行的代码的方法的语法。这一章解释了如何给一个对象发送这样一条消息，并涵盖了 Objective-C 的一些动态特征，包括动态类型和决定哪个方法应当在运行时被调用的能力。
@@ -6,6 +7,7 @@
 在一个对象能够被使用前，它必须结合为它的属性所做的内存分配和内部值的初始化以被正确地创建。这一章描述了如何嵌套方法调用来分配和初始化一个对象来保证它是被正确配置的。
 
 ## 对象发送并且接收消息
+
 尽管在 Objective-C 的对象间中有多种不同的方法来发送消息，到目前为止最普遍的方法是使用方括号的基础语法，像这样：
 
 ```
@@ -44,14 +46,15 @@
 
 发送一条 Objective-C 的消息概念上非常像调用一个函数。[图2-1](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithObjects/WorkingwithObjects.html#//apple_ref/doc/uid/TP40011210-CH4-SW4)为消息`“sayHello”`展示了实际的程序流程。
 
-**图2-1** 基本的消息程序流程
+**图 2-1** 基本的消息程序流程
 
-![2-1](images/programflow1.png)
+![2-1](images/programflow1.png) 
 
 为了指定一条消息的接收者，理解指针在 Objective-C 中怎样被用来指向对象是非常重要的。
 
 
 ### 使用指针来跟踪对象
+
 C 和 Objective-C 使用变量来跟踪数值，就像其他编程语言一样。  
 
 在标准C语言中有许多基本的标量变量被定义，包括整数型，浮点数型和字符型，它们像这样被声明和赋值：
@@ -88,7 +91,8 @@ Objective-C对象，相比之下，则分配得稍许不同。对象通常比方
 
 尽管指针变量 `myString`（星号指示它的指针）的作用域受 `myMethod` 作用域的限制，它在存储空间中所指的实际的字符串对象在作用域外可能会有更长的生存时间。举例来说，它可能已经存在，或者你可能需要在其他的方法调用中传递对象。
 
-### 你可以给方法参数传递对象  
+### 你可以给方法参数传递对象 
+ 
 如果你在发送一条消息时需要传递一个对象，你为方法参数中的一个提供一个对象指针。前一章描述了声明只有一个参数的方法的语法：
 
 ```
@@ -118,6 +122,7 @@ Objective-C对象，相比之下，则分配得稍许不同。对象通常比方
 想要获取更多有关 `NSLog()` 和 `NSString` 类的说明符使用的消息，可参见 [String Format Specifiers](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/Strings/Articles/formatSpecifiers.html#//apple_ref/doc/uid/TP40004265)。  
 
 ### 方法可以返回值  
+
 就像通过方法参数传递值，方法直接返回值是有可能的。在这章中到现在每一个展示出的方法都有一个返回值类型 `void`。这个C语言的关键词 `void` 意味着一个方法不返回任何东西。  
 
 规定返回值类型为 `int` 意味着方法返回一个标量整形数值：  
@@ -169,6 +174,7 @@ NSString *stringToReturn = // create an interesting string...
 在这种状况下有很多存储空间管理的考虑：一个返回了的对象（在堆中被创建）需要存在足够长的时间使它被方法的原有调用者使用，但不是永久存在，这是因为那样会导致内存泄露。在很大程度上，具有自动引用计数（ARC）特征的 Objectiive-C 编译程序会为你照顾到这些需要考虑的地方的。  
 
 ### 对象能给他们自己发送消息
+
 无论何时你正在写一个方法的实现，你可以获得一个重要的隐藏值, `self`。概念上，`self` 是一个指向"已经接收到这个消息的对象"的方法。它是一个指针，就像上文的值 `greeting`，可以被用来在现在接收对象上调用方法。  
 
 你也许决定通过修改 `sayHello` 方法来使用上文的 `saySomething:`方法来重构 `XYZPerson` 的实现，因此将 `NSLog()` 的调用移动到不同的方法中。这将意味着你能进一步增加方法，像 `sayGoodbye` ，那将每次联系 `saySomething:` 方法来解决真实的问候过程。如果你稍后想将每一个问候在用户接口中的每个文本框中展示出来，你只需要修改 `saySomething:` 方法而不是仔细检查并单独地调整每一个问候方法。  
@@ -188,12 +194,13 @@ NSString *stringToReturn = // create an interesting string...
 
 如果你用这种更新过的实现把消息 `sayHello` 发送给对象 `XYZPerson`，实际的程序流程将会在[图2-2](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithObjects/WorkingwithObjects.html#//apple_ref/doc/uid/TP40011210-CH4-SW8)中显示。
 
-**图2-2** 和自己通信时的程序流程
+**图 2-2** 和自己通信时的程序流程
 
 ![2-2](images/programflow2.png)
 
 
 ### 对象可以调用被它们的超类实现的方法
+
 在 Objective-C 中对你来说有另外一个重要的关键词，叫作 `super`。发送一条消息给 `super` 是调用一个被进一步完善继承链的超类所定义的方法的途径。`super` 最普遍的用法是重写一个方法的时候。  
 
 比方说你想要创建一个新类型的 person 类，“shouting person”类，它每一句问候都用大写字母展示出来。你可以复制整个 `XYZPerson` 类并修改每个方法中的每个字符串使它们是大写的。但是最简单的方法是创建一个新的继承自 `XYZPerson` 的类，只要重写 `saySomething:` 方法这样它就会以大写的形式展现出来，像这样：
@@ -216,7 +223,7 @@ NSString *stringToReturn = // create an interesting string...
 
 因为 `sayHello` 由 `XYZPerson` 实现，而 `XYZShoutingPerson` 是用来继承 `XYZPerson` 的，你也可以在 `XYZShoutingPerson`对象上调用 `sayHello` 对象。当你在 `XYZShoutingPerson`对象上调用 `sayHello` 对象时，`[self saySomething:...]`的调用将使用重写过的实现并且将问候显示为大写，实际的程序流程图在[图2-3](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithObjects/WorkingwithObjects.html#//apple_ref/doc/uid/TP40011210-CH4-SW9)中显示。
 
-**图2-3** 对于一个覆写方法的程序流程
+**图 2-3** 对于一个覆写方法的程序流程
 
 ![2-3](images/programflow3.png)
 
@@ -236,12 +243,13 @@ NSString *stringToReturn = // create an interesting string...
 
 由于给对象 `XYZShoutingPerson` 发送消息 `sayHello` 而来的实际的程序流程如[图2-4](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithObjects/WorkingwithObjects.html#//apple_ref/doc/uid/TP40011210-CH4-SW12)所示。
 
-**图2-4** 和超类通信时的程序流程
+**图 2-4** 和超类通信时的程序流程
 
 ![2-4](images/programflow4.png)
 
 
 ## 对象是被动态创建的
+
 正如在这章早些时候描述的，给 Objective-C 对象的存储空间的分配是动态的。创建一个对象的第一步是确认有足够的存储空间，不仅是对被一个对象的类所定义的属性来说，也要满足在它的继承链中在每一个超类上所定义的属性。
 
 根类 `NSObject` 提供了一个类方法，`alloc`，为你处理这一过程：
@@ -274,9 +282,9 @@ NSString *stringToReturn = // create an interesting string...
 
 最内部的调用第一个被实现，所以 `NSObject` 类被送到返回一个新被分配的 `NSObject` 实例的 `alloc` 方法。这个返回的对象之后被作为 `init` 消息的接收者被使用，它自己返回对象并赋给 `newObject` 指针，正如在[图2-5](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithObjects/WorkingwithObjects.html#//apple_ref/doc/uid/TP40011210-CH4-SW14)中显示的那样。
 
-**图2-5** 嵌套 `alloc` 和 `init` 消息
+**图 2-5** 嵌套 `alloc` 和 `init` 消息
 
-![2-5](images/nestedallocinit.png)
+![2-5](images/nestedallocinit.png) 
 
 
 **注解**：`init` 返回一个由 `alloc` 创建的不同的对象是有可能的，所以正如展示的那样，嵌套调用是最好的尝试。
@@ -291,6 +299,7 @@ NSString *stringToReturn = // create an interesting string...
 如果对 `init` 的调用返回了一些其他的对象，你将留下一个初始被分配过但从没有初始化的对象的指针。
 
 ### 初始化方法可以携带参数
+
 一些对象需要用需要的值来初始化。一个 `NSNumber` 对象，举例来说，必须用它需要代表的数值来创建。  
 
 `NSNumber`类定义了几种初始化方法，包括：
@@ -309,6 +318,7 @@ NSString *stringToReturn = // create an interesting string...
 ```
 
 ### 类工厂方法是分配和初始化的一个选择
+
 正如在前边的章节中所提到的，一个类也可以定义工厂方法。工厂方法提供了传统的 `alloc]`，`init]` 过程的不许嵌套两个方法的选择。
 
 `NSNumber` 类定义了几个类工厂方法来匹配它的初始化方法，包括：
@@ -329,6 +339,7 @@ NSString *stringToReturn = // create an interesting string...
 这实际上和之前使用 `alloc]` `initWithInt:]` 的例子相同。类工厂方法通常指直接调用 `alloc` 和相关的 `init` 方法，它为方便使用而被提供。
 
 ### 如果初始化不需要参数那么使用 new 来创建一个对象
+
 创建一个类的实例时使用类方法 `new` 是有可能的。这个方法由 `NSObject` 提供并且在你自己的超类中不需要被覆写。
 
 这实际上和调用没有参数的 `alloc` 和 `init` 是一样的:
@@ -377,6 +388,7 @@ NSString *stringToReturn = // create an interesting string...
 Objective-C 也支持文字来创建不可变的 `NSArray` 和 `NSDictionary` 对象；这些将在 `Values and Collections` 中进一步讨论。
 
 ## Objective-C 是一种动态语言
+
 正如之前所提到的，你需要使用一个指针来追踪存储空间中的一个对象。因为 Objective-C 的动态特征，你为那个指针使用什么特定的类型都没有关系——当你给它发送消息时，正确的方法将总是在相关的对象上被调用。
 
 `id`型定义了一个通用的对象指针。当声明一个变量时使用 `id` 是有可能的，但你会失去关于对象编译时的信息。
@@ -411,6 +423,7 @@ Objective-C 也支持文字来创建不可变的 `NSArray` 和 `NSDictionary` �
 尽管 `firstPerson` 和 `secondPerson` 作为 `XYZPerson` 的对象都是静态类型的，`secondPerson` 在运行时将会指向一个 `XYZShoutingPerson` 对象。当 `sayHello` 方法在每一个对象上被调用时，正确的实现将会被使用；对于 `secondPerson`，这意味着 `XYZShoutingPerson` 的版本。
 
 ### 确定对象相等
+
 如果你需要确定一个对象是否和另一个对象相同，记住你在使用指针是重要的。
 
 标准的C语言等号运算符 == 被用来检测两个变量的值是否相同，像这样：
@@ -446,6 +459,7 @@ Objective-C 也支持文字来创建不可变的 `NSArray` 和 `NSDictionary` �
 ```
 
 ### 使用 nil
+
 在你声明它们的时候初始化纯量变量总是一个好主意，否则它们的初始值将包含前一个堆栈的垃圾内容：
 
 ```
@@ -499,6 +513,7 @@ Objective-C 也支持文字来创建不可变的 `NSArray` 和 `NSDictionary` �
 ```
 
 ## 练习
+
 1.在你的项目里从上一章最后的练习中打开 `main.m` 文件并且找到 `main()` 函数。作为对于任何用 C 语言写的可执行的程序，这个函数代表了你应用的起点。
 
 使用 `alloc` 和 `init` 创建一个新的 `XYZPerson` 实例，然后调用 `sayHello` 方法。
