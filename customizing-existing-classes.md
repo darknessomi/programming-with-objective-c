@@ -104,22 +104,11 @@ Categories 可用于声明类方法或成员方法，但并非通常适合声明
 添加一个传统属性的唯一方式——也就是从现有类支持一个新的成员变量——是使用类扩展，如 [Class Extensions Extend the Internal Implementation]
 (https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html#//apple_ref/doc/uid/TP40011210-CH6-SW3)。
 
-<table>
-<tr>
-<td>
-注： Cocoa 和 Cocoa Touch 包括了大量的主要框架类的 categories 。
-</td>
-<tr>
-</tr>
-<tr>
-</tr>
-<tr>
-<td>
-这一章的导言中提到的字符串绘图功能事实上已经由 OS X 中名为 NSStringDrawing 的 category 提供给 NSString 类了，其中包括 drawAtPoint:withAttributes: 和 drawInRect:withAttributes: 方法。
+
+> **注：** Cocoa 和 Cocoa Touch 包括了大量的主要框架类的 categories。
+> 
+> 这一章的导言中提到的字符串绘图功能事实上已经由 OS X 中名为 NSStringDrawing 的 category 提供给 NSString 类了，其中包括 drawAtPoint:withAttributes: 和 drawInRect:withAttributes: 方法。
 对于 iOS ，UIStringDrawing category 包括 drawAtPoint: withFont 方法和 drawInRect: withFont 方法。
-</td>
-</tr>
-</table>
 
 
 ## 避免 categories 方法名冲突
@@ -136,14 +125,18 @@ Categories 可用于声明类方法或成员方法，但并非通常适合声明
 在运行时，只有一个方法会“赢”，并添加到 NSString 类中，另一个则成为未定义不起作用。
 
 如果你添加方法到 Cocoa 或 Cocoa Touch 类和之后版本的原始类中，那么可能会出现另一个问题。
+
 例如 NSSortDescriptor 类，它描述了一个对象的集合应该是如何排序的，包含有 aninitWithKey: accending 初始化方法。
+
 但并没有在早期的 OS X 和 iOS 版本下提供相应的工厂类方法。
 
 按照约定，工厂类方法应该叫做 sortDescriptorWithKey: accending ，所以为方便起见你要选择添加一个 category 到 NSSortDescriptor 类上来提供此方法。
 这是在旧版本的 OS X 和 iOS 下操作的，但随着 Mac OS X 10.6 版本和 iOS 4.0 的发布，一个叫 sortDescriptorWithKey 的方法添加到原始的 NSSortDescriptor 类中，意味着在这些或更高版本操作系统上运行你的应用程序时，你不再会有命名冲突的问题。
 
 为了避免未定义的行为，最佳的做法是给框架类 categories 中的方法名添加一个前缀，就像你向你自己的类的名称添加一个前缀一样。
+
 你可以选择使用和你自己的类的前缀相同的三个字母，但要小写以遵循方法命名的规则，然后在方法名称的其余部分之间用一个下划线连接。
+
 对于 NSSortDescriptor 的示例，你的 category 应该看起来像这样：
 
 ```
@@ -162,6 +155,7 @@ Categories 可用于声明类方法或成员方法，但并非通常适合声明
 ## 用 extension 来实现类的扩展
 
 类扩展与 category 有相似性，但在编译时它只能被添加到已有源代码的一类中（该类扩展和该类同时被编译）。
+
 声明一个类扩展的方法在原始类 @ implementation 块中，所以你不能，举个例子，在框架类上声明一个类扩展，如 Cocoa 或 Cocoa Touch 的 NSString 类。
 
 用于声明类扩展的语法类似于一个 category 声明的语法，看起来像这样：
@@ -230,50 +224,36 @@ Categories 可用于声明类方法或成员方法，但并非通常适合声明
 @end
 ```
 
-<table>
-<tr>
-<td>
-注： 读写属性是可选的，因为它是默认值。为清楚起见你可以在想使用它时重新声明属性。
-</td>
-</tr>
-</table>
+
+> 注： 读写属性是可选的，因为它是默认值。为清楚起见你可以在想使用它时重新声明属性。
 
 这意味着编译器现在将合成一个 setter 方法，所以在 XYZPerson 类执行内部的任何方法都能够直接使用 setter 方法或语法来设置该属性值。
 通过为 XYZPerson 类继承的源代码文件声明类扩展， 使得 XYZPerson 类的信息是私有的。
 如果另一种类型的对象试图设置该属性时，编译器将生成一个错误。
 
-<table>
-<tr>
-<td>
-注： 如上所示通过添加类扩展，重新定义 uniqueIdentifier 属性为读写属性，一个名为 setUniqueIdentifier: 的方法将在运行时在每个 XYZPerson 对象上存在，无论其他源代码文件是否知道该类扩展的存在。
-</td>
-</tr>
-<tr>
-<td>
+> 注： 如上所示通过添加类扩展，重新定义 uniqueIdentifier 属性为读写属性，一个名为 setUniqueIdentifier: 的方法将在运行时在每个 XYZPerson 对象上存在，无论其他源代码文件是否知道该类扩展的存在。
+
 当其他源代码文件中的某段代码试图调用一个私有方法或设置一个只读属性的值时，编译器会报错，但利用动态运行功能使用其他方式调用这些方法是可以避免编译器错误的，例如通过使用由 NSObject 类提供的 performSelector 的方法。
 你应该避免出现一个类的层次结构或者仅在必须的时候使用；相反主类接口应始终定义正确的"公共接口"。
-</td>
-</tr>
-<tr>
-<td>
-如果你打算在选择其他类别时，“私有”方法或属性仍是可用的，例如在一个框架内的相关类中。
+
+> 如果你打算在选择其他类别时，“私有”方法或属性仍是可用的，例如在一个框架内的相关类中。
 你可以在单独的头文件中声明一个类扩展，并在需要它的源文件中导入它。在一个类中有两个头文件并不罕见，例如， XYZPerson.h 和 XYZPersonPrivate.h 等。
 当你释放框架时，你只需释放公共的 XYZPerson.h 头文件即可。
-</td>
-</tr>
-</table>
 
 ## 考虑其他办法来自定义类
 
 Categories 和类扩展使得直接添加方法到一个现有的类变得很容易，但有时这并不是最好的选择。
 
 面向对象编程的主要目标之一是编写可重用的代码，这意味着在各种情况下所有的类都尽可能地被重复使用。
+
 如果你正在创建一个视图类来描述一个对象用于在屏幕上显示信息，那考虑一下这个类能在多种情况下可用是必要的。
 
 除了将关于布局或内容的部分硬编码，一种可选择的方法是利用继承并将这些部分留在方法中，特别是子类重写的方法中。
+
 虽然重用类并不会相对容易，因为每次你想要使用的那个原始的类时你仍然需要创建一个新的子类。
 
 另一种选择是要对类使用一个 delegate  对象。
+
 任何可能会限制可重用性的部分都可授权给另一个对象，也就是说可以在运行时编译这些部分。
 一个常见的例子是标准表视图类 ( OS X 的 NSTableView 和 iOS 的 UITableView )。
 为了使一般表格视图 （使用一个或多个列和行显示信息的对象）可用，它将内容部分留给另一个对象在运行时决定。
@@ -296,10 +276,9 @@ Objective- C 不仅仅是一种编译机器的语言代码，而且它还需要�
 
 1. 添加一个 category 到 XYZPerson 类来声明和继承附加的功能，例如以不同的方式显示一个人的名字。
 
-2. 向 NSString 类 添加一个 category，以添加一个方法来在给定位置绘制全部字母大写的字符串，通过调用到一个现有的 NSStringDrawing  category 方法来执行实际的绘制。
+2. 向 NSString 类 添加一个 category，以添加一个方法来在给定位置绘制全部字母大写的字符串，通过调用到一个现有的 NSStringDrawing  category 方法来执行实际的绘制。  
 这些方法都记录在 iOS 的 NSString UIKit Additions Reference 中和 OSX 的 [NSString Application Kit Additions Reference](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSString_AppKitAdditions/index.html#//apple_ref/doc/uid/TP40004121)中。
 
-3. 将两个只读属性添加到原始 XYZPerson 类的继承中，来代表一个人的身高和体重，分别是 measureWeight 和 measureHeight 方法。
-
-   使用类扩展重新声明属性为读写属性，并继承以便将属性设置为适当的值。
+3. 将两个只读属性添加到原始 XYZPerson 类的继承中，来代表一个人的身高和体重，分别是 measureWeight 和 measureHeight 方法。  
+使用类扩展重新声明属性为读写属性，并继承以便将属性设置为适当的值。
 
